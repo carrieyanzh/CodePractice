@@ -1,0 +1,48 @@
+pipeline {
+    agent any // Specifies that the pipeline can run on any available agent
+    
+    tools {
+        maven 'mvn'  // This must match the name in Global Tool Configuration
+    }
+    
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git 'https://github.com/carrieyanzh/CodePractice.git' // Clones the GitHub repository
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Example for a Maven project
+                sh 'mvn clean install' // Executes a shell command to build the project
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Example for running tests
+                sh 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Example for deployment (replace with your specific deployment steps)
+                echo 'Deploying application...'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
